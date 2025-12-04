@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>A380 CAFÉ — المنيو</title>
+
+  <!-- خط تاجوال -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #F5E7CC;
+      --card: #FFF9F3;
+      --accent: #7B3F3F;
+      --accent-dark: #4A2E2E;
+      --muted: #9a8476;
+      --radius: 14px;
+      --shadow: 0 4px 12px rgba(80,60,50,0.12);
+    }
+
+    .divider {
+      height: 1px;
+      background: #e3d6c7;
+      margin: 25px 0;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body {
+      font-family: "Tajawal", sans-serif;
+      direction: rtl;
+      margin: 0;
+      padding: 0;
+      color: var(--accent-dark);
+      background-color: #2a1a17;
+      /* خلفية بسيطة بصورة بدون fixed ولا طبقات زيادة */
+      background-image: url("coffee-bg.jpg");
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    /* طبقة تعتيم خفيفة فقط */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 10, 8, 0.78);
+      z-index: -1;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 24px auto 32px;
+      background: #fff;
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.35);
+      position: relative;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding: 24px 28px 14px;
+      background: linear-gradient(180deg,
+                  #ffffff,
+                  #fdf6ea);
+      border-bottom: 1px solid rgba(123,63,63,0.10);
+      position:relative;
+      overflow:hidden;
+    }
+
+    header::after{
+      content:"A380";
+      position:absolute;
+      left:10px;
+      bottom:-12px;
+      font-size:72px;
+      font-weight:800;
+      letter-spacing:6px;
+      color:rgba(220,190,160,0.22);
+      transform:rotate(-6deg);
+      pointer-events:none;
+    }
+
+    .logo{
+      width:110px;height:110px;
+      min-width:110px;
+      background:#f7e4d4;
+      border-radius:22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 18px rgba(120,80,70,0.25);
+      border:3px solid rgba(255,255,255,0.9);
+      overflow:hidden;
+    }
+
+    .logo img{
+      height: 110px;
+      width: 110px;
+      border-radius:18px;
+      object-fit:cover;
+    }
+
+    .head-info h2{
+      margin:0 0 6px;
+      font-size:28px;
+      color:var(--accent-dark);
+      letter-spacing:1px;
+    }
+
+    .sub{
+      color:var(--muted);
+      font-size:14px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .sub-pill{
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(123,63,63,0.08);
+      color:var(--accent-dark);
+      font-weight:700;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    nav{
+      display:flex;
+      gap:10px;
+      padding:10px 20px 10px;
+      overflow:auto;
+      border-top:1px solid rgba(123,63,63,0.06);
+      border-bottom:1px solid rgba(123,63,63,0.06);
+      background:#fdf6ec;
+    }
+
+    nav::-webkit-scrollbar{
+      height:5px;
+    }
+    nav::-webkit-scrollbar-thumb{
+      background:rgba(123,63,63,0.35);
+      border-radius:999px;
+    }
+
+    .cat-btn{
+      background:#fff;
+      border:1px solid rgba(123,63,63,0.12);
+      padding:8px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+      color:var(--accent-dark);
+      box-shadow:0 2px 6px rgba(100,60,50,0.08);
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.1s ease;
+    }
+
+    .cat-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 6px 12px rgba(100,60,50,0.18);
+    }
+
+    .cat-btn.active{
+      background:linear-gradient(135deg,#7B3F3F,#5b2626);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(123,63,63,0.42);
+    }
+
+    .content{
+      display:flex;
+      gap:20px;
+      padding:20px 20px 22px;
+      background:#f8efe1;
+    }
+
+    .left{flex:1}
+    .right{width:300px; min-width:240px}
+
+    .card{
+      background: #fdf2dd;
+      color: var(--accent-dark);
+      border-radius:18px;
+      padding:20px;
+      margin-bottom:16px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card h3{
+      margin:0 0 12px;
+      font-size:20px;
+      color:var(--accent);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .card h3::after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:linear-gradient(90deg,rgba(123,63,63,0.4),transparent);
+      opacity:0.5;
+    }
+
+    .items{
+      display:grid;
+      grid-template-columns: repeat(2,1fr);
+      gap:14px;
+      position:relative;
+      z-index:1;
+    }
+
+    .item{
+      background:#fff;
+      border-radius:12px;
+      padding:10px 10px;
+      display:flex;
+      gap:10px;
+      border:1px solid rgba(120,80,70,0.05);
+      box-shadow:0 3px 6px rgba(90,60,50,0.08);
+      transition:
+        transform 0.15s ease-out,
+        box-shadow 0.15s ease-out,
+        border-color 0.15s ease-out;
+    }
+   
+    .item:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 12px rgba(80,50,40,0.18);
+      border-color:rgba(123,63,63,0.18);
+    }
+
+    .item-initial{
+      width:50px;
+      height:50px;
+      border-radius:14px;
+      background:linear-gradient(135deg,#7B3F3F,#4A2E2E);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:24px;
+      color:#ffe9c7;
+      flex-shrink:0;
+    }
+
+    .item .name{font-weight:700; margin-bottom:3px;font-size:14px;}
+    .item .desc{font-size:12px;color:var(--muted)}
+    .item .price{
+      margin-right:auto;
+      align-self:center;
+      font-weight:800;
+      font-size:15px;
+      color:var(--accent-dark);
+      white-space:nowrap;
+    }
+
+    /* صندوق البحث */
+    .search-box{
+      margin-bottom:18px;
+      position:relative;
+    }
+
+    .search-box input{
+      width:100%;
+      padding:12px 42px 12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(123,63,63,0.18);
+      font-size:14px;
+      background:#fff;
+      box-shadow:0 3px 8px rgba(120,80,70,0.10);
+      outline:none;
+      transition:
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .search-box input:focus{
+      border-color:rgba(123,63,63,0.6);
+      box-shadow:0 9px 16px rgba(80,50,40,0.25);
+      background:#fff;
+    }
+
+    .search-icon{
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:18px;
+      color:var(--muted);
+      pointer-events:none;
+    }
+
+    .search-pill{
+      font-size:11px;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .right .card{
+      background:#f9eddb;
+    }
+
+    .tag-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(123,63,63,0.08);
+      font-size:12px;
+      color:var(--accent-dark);
+      margin-top:10px;
+    }
+
+    footer{
+      padding:12px 20px;
+      background:#fffaf1;
+      border-top:1px solid rgba(123,63,63,0.08);
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:13px;
+    }
+    .qr{
+      width:80px;height:80px;
+      background:#fdf2dd;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:12px;
+      font-size:11px;color:var(--muted);
+      box-shadow:0 4px 10px rgba(120,80,60,0.24);
+    }
+
+    @media(max-width:880px){
+      .content{flex-direction:column}
+      .right{width:100%}
+      .items{grid-template-columns:1fr}
+      header{flex-direction:row;align-items:flex-start;}
+      .logo{width:90px;height:90px;min-width:90px;}
+      .logo img{width:90px;height:90px;}
+      .head-info h2{font-size:24px;}
+      .wrap{margin:16px auto 24px;}
+    }
+
+    @media(max-width:520px){
+      footer{
+        flex-direction:column;
+        gap:8px;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="logo">
+      <img src="logooo A380.jpg" alt="logo">
+    </div>
+
+    <div class="head-info">
+      <h2>A380 CAFÉ MENU</h2>
+      <div class="sub">
+        <div>📍 مطار بنينا - بنغازي</div>
+        <div>☎️ 093-1884416</div>
+        <div class="sub-pill">
+          🚗 خدمة توصيل
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav id="cats">
+    <button class="cat-btn active" data-target="hot">☕ مشروبات ساخنة</button>
+    <button class="cat-btn" data-target="cold">🧋 مشروبات باردة</button>
+    <button class="cat-btn" data-target="juices">🍹 عصائر طبيعية</button>
+    <button class="cat-btn" data-target="milkshake">🥤 ميلك شيك</button>
+    <button class="cat-btn" data-target="sweets">🍰 حلويات</button>
+    <button class="cat-btn" data-target="sandwich">🥪 ساندوتشات</button>
+    <button class="cat-btn" data-target="brioche">🥐 بريوش</button>
+  </nav>
+
+  <div class="content">
+    <main class="left" id="main">
+
+      <!-- خانة البحث -->
+      <div class="search-box">
+        <input id="searchInput" type="search" placeholder="ابحث عن صنف… (مثال: لاتيه، عصير، بريوش)">
+        <span class="search-icon">🔍</span>
+        <div class="search-pill">💡 يمكنك البحث بالاسم أو نوع المشروب، وسيتم تصفية كل الأقسام تلقائيًا.</div>
+      </div>
+
+      <section class="card" id="hot">
+        <h3>مشروبات ساخنة</h3>
+        <div class="items" id="hot-items"></div>
+      </section>
+
+      <section class="card" id="cold">
+        <h3>مشروبات باردة</h3>
+        <div class="items" id="cold-items"></div>
+      </section>
+
+      <section class="card" id="juices">
+        <h3>عصائر طبيعية</h3>
+        <div class="items" id="juices-items"></div>
+      </section>
+
+      <section class="card" id="milkshake">
+        <h3>ميلك شيك</h3>
+        <div class="items" id="milkshake-items"></div>
+      </section>
+
+      <section class="card" id="sweets">
+        <h3>حلويات</h3>
+        <div class="items" id="sweets-items"></div>
+      </section>
+
+      <section class="card" id="sandwich">
+        <h3>ساندوتشات</h3>
+        <div class="items" id="sandwich-items"></div>
+      </section>
+
+      <section class="card" id="brioche">
+        <h3>بريوش</h3>
+        <div class="items" id="brioche-items"></div>
+      </section>
+
+    </main>
+
+    <aside class="right">
+
+      <div class="card" style="text-align:center">
+        <div style="font-weight:800;color:var(--accent)">⏰ ساعات العمل</div>
+        <div style="color:var(--muted);margin-top:6px">متوفرون لخدمتكم 24 ساعة يوميًا</div>
+        <div class="tag-chip">✈️ مثالي قبل الإقلاع وبعد الوصول</div>
+      </div>
+
+     <div class="card" style="text-align:center">
+  <div style="font-weight:800;color:var(--accent)">تابعنا</div>
+
+  <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px; align-items:center;">
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/profile.php?id=61580244400373&mibextid=wwXIfr"
+       target="_blank"
+       style="text-decoration:none; display:flex; align-items:center; gap:8px; font-size:15px; font-weight:700; color:#1877F2;">
+      <span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2">
+          <path d="M22 12.07C22 6.49 17.52 2 12 2S2 6.49 2 12.07C2 17.08 5.66 21.21 10.44 22v-7h-2.9v-2.93h2.9V9.83c0-2.86 1.7-4.45 4.3-4.45 1.25 0 2.56.22 2.56.22v2.82h-1.44c-1.42 0-1.86.88-1.86 1.78v2.14h3.17l-.51 2.93h-2.66v7C18.34 21.21 22 17.08 22 12.07z"/>
+        </svg>
+      </span>
+      Facebook
+    </a>
+
+    <!-- Snapchat -->
+    <a href="https://www.snapchat.com/@coffea20254069"
+       target="_blank"
+       style="text-decoration:none; display:flex; align-items:center; gap:8px; font-size:15px; font-weight:700; color:#FFFC00; ">
+      <span>
+        <svg width="22px" height="22px" viewBox="0 0 512 512" fill="#FFFC00" stroke="#000" stroke-width="9"xmlns="http://www.w3.org/2000/svg"><title>ionicons-v5_logos</title><path d="M496,347.21a190.31,190.31,0,0,1-32.79-5.31c-27.28-6.63-54.84-24.26-68.12-52.43-6.9-14.63-2.64-18.59,11.86-24,14.18-5.27,29.8-7.72,36.86-23,5.89-12.76,1.13-27.76-10.41-35.49-15.71-10.53-30.35-.21-46.62,2.07,3.73-46.66,8.66-88.57-22.67-127.73C338.14,48.86,297.34,32,256.29,32S174.43,48.86,148.48,81.33c-31.38,39.26-26.4,81.18-22.67,127.92C109.49,207,95,196.46,79.18,207.07c-14.72,9.85-17,29.76-5.44,43s31.64,9.5,43.45,20.6c6.49,6.09,3.49,12.61-.35,20.14-14.48,28.4-39.26,45.74-69.84,51.56-4,.76-22.31,2.87-31,3.65,0,9.28.52,16.78,1.63,21.73,2.94,13.06,12.32,23.58,23.69,30.1C52.5,404.25,76.8,404.28,83,413.36c3,4.48,1.76,12.28,5.33,17.38a23.8,23.8,0,0,0,15.37,9.75c18.61,3.61,37.32-7.2,56.42-2.1,14.85,3.95,26.52,15.87,39.26,24,15.51,9.85,32.34,16.42,50.83,17.49,38.1,2.21,59.93-18.91,90.58-36.42,19.5-11.14,38.15-3.86,58.88-2.68,20.1,1.15,23.53-9.25,29.62-24.88a27.37,27.37,0,0,0,1.54-4.85,10.52,10.52,0,0,0,2.28-1.47c2-1.57,10.55-2.34,12.76-2.86,10.28-2.44,20.34-5.15,29.17-11.2,11.31-7.76,17.65-18.5,19.58-32.64A93.73,93.73,0,0,0,496,347.21ZM208,128c8.84,0,16,10.74,16,24s-7.16,24-16,24-16-10.74-16-24S199.16,128,208,128Zm103.62,77.7c-15.25,15-35,23.3-55.62,23.3a78.37,78.37,0,0,1-55.66-23.34,8,8,0,0,1,11.32-11.32A62.46,62.46,0,0,0,256,213c16.39,0,32.15-6.64,44.39-18.7a8,8,0,0,1,11.23,11.4ZM304,176c-8.84,0-16-10.75-16-24s7.16-24,16-24,16,10.75,16,24S312.84,176,304,176Z"/></svg>
+      </span>
+      Snapchat
+    </a>
+
+  </div>
+
+  <div class="tag-chip">📸 شاركنا صورتك مع هاشتاق #A380_Cafe</div>
+</div>
+
+
+    </aside>
+  </div>
+
+  <footer>
+    <div>
+      <div style="font-weight:800;color:var(--accent)">A380 CAFÉ</div>
+      <small style="color:var(--muted)">هاتف: +218 93 188 4416 — خدمة توصيل  (مطار بنينا )</small>
+    </div>
+    
+  </footer>
+
+</div>
+
+<script>
+/* بيانات المنيو */
+const MENU = {
+  hot:[
+    {name:"مكياطه",desc:" نكهة مركّزة تناسب الذوق الرفيع  ",price:"  "},
+    {name:"قهوه عربيه",desc:"مزيج غني يقدم تجربة قهوة حقيقية.",price:""},
+    {name:"كابتشينو",desc:"محضر بعناية ليقدم نكهة متوازنة وفاخرة ",price:""},
+    {name:"نسكافيه",desc:"يرفع مزاجك مع أول رشفة.",price:""},
+    {name:"نسكافيه محلى",desc:"يرفع مزاجك مع أول رشفة.  ",price:""},
+    {name:"اوفالتين",desc:"مشروب يقدم لك دافئ",price:""},
+    {name:"نسكويك",desc:" مشروب يقدم لك دافئ ",price:""},
+    {name:"اكسبريس",desc:"نكهة مركّزة تناسب الذوق الرفيع",price:""},
+    {name:"شاهي احمر",desc:"مشروب ساخن",price:""},
+    {name:"شاهي اخضر",desc:"شاي ليبتون احمر ",price:""},
+    {name:"شاهي مغربي",desc:"شاي ليبتون اخضر",price:""},
+    {name:"سحلب عادي",desc:" مشروب يقدم لك دافئ",price:""},
+    {name:"هوت شوكلت",desc:"شوكولاتة ساخنة بالحليب ",price:""}
+  ],
+  cold:[
+    {name:"ايس سبانش لاتيه",desc:"إسبريسو مع ثلج",price:""},
+    {name:"ايس كافي",desc:"لاتيه مثلج",price:""},
+    {name:"ايس موكا",desc:"اسبريسو مع ثلج و موكا",price:""}
+  ],
+  juices:[
+    {name:"عصير برتقال",desc:"طبيعي",price:""},
+    {name:"عصير مانجا",desc:"طبيعي",price:""},
+    {name:"عصير فراولة",desc:"طبيعي",price:""},
+    {name:"عصير جوافه",desc:"طبيعي ",price:""},
+    {name:"عصير ليمون نعناع",desc:" منعش",price:""},
+    {name:"فروبي مانجا",desc:"طبيعي",price:""},
+    {name:"فروبي موز",desc:"طبيعي",price:""},
+    {name:"فروبي فراوله",desc:"طبيعي",price:""},
+    {name:"فروبي تمر و لوز",desc:"طبيعي",price:""}
+  ],
+  milkshake:[
+    {name:"ميلك شيك نوتيلاه",desc:"ايس كريم و نوتيلاه",price:""},
+    {name:"ميلك شيك لوتس",desc:"ايس كريم و لوتس",price:""},
+    {name:"ميلك شيك فراولة",desc:"ايس كريم و فراولة",price:""},
+    {name:"ميلك شيك اوريو",desc:"ايس كريم و اوريو",price:""},
+    {name:"سموذي فراولة",desc:"  سموذي ",price:""},
+    {name:"سموذي منجا",desc:"سموذي",price:""},
+    {name:"سموذي موخيتو",desc:"سموذي",price:""}
+  ],
+  sweets:[
+    {name:"كريب نوتيلا",desc:"",price:""},
+    {name:"كريب كلاسك",desc:"",price:""},
+    {name:"كريب نوتيلا عسل",desc:"",price:""},
+    {name:"كريب نوتيلا + فواكه",desc:"",price:""},
+    {name:"كريب A 380",desc:"",price:""},
+    {name:"كريب فستق",desc:"",price:""},
+    {name:"كريب ميلكا",desc:"",price:""},
+    {name:"كريب شكلاطة دبي",desc:"",price:""},
+    {name:"كريب لوتس",desc:"",price:""},
+    {name:"كريب حار A 380",desc:"",price:""},
+    {name:"كريب حار + اجبان + تن",desc:"",price:""},
+    {name:" مني بات كيك نوتيلا",desc:"",price:""},
+    {name:" مني بات كيك لوز",desc:"",price:""},
+    {name:" مني بات كيك لوتس",desc:"",price:""},
+    {name:" مني بات كيك لوتس + اوريو",desc:"",price:""},
+    {name:" مني بات كيك فستق",desc:"",price:""},
+    {name:" مني بات كيك A 380",desc:"",price:""}
+  ],
+  sandwich:[
+    {name:"ساندوتش تن  ",desc:"خبز شوفان",price:""},
+    {name:"ساندوتش مفروم  ",desc:"خبز عادي",price:""},
+    {name:"ساندوتش تن + دحي  ",desc:"خبز عادي",price:""},
+    {name:"توست اجبان  ",desc:"خبز توست",price:""},
+    {name:"نوست اجبان وتن   ",desc:"خبز توست",price:""},
+    {name:"نوست موزريلا + سلامي   ",desc:"خبز توست",price:""},
+    {name:"نوست A 380   ",desc:"خبز توست",price:""},
+    {name:"  كلوب سندوتش ",desc:"خبز  سبيشل",price:""},
+
+    
+  ],
+  brioche:[
+    {name:"بريوش سادة",desc:"طازج",price:""},
+    {name:"بريوش جبنة + عسل +زعتر",desc:"طازج",price:""},
+    {name:"بريوش نوتيلا + لوز + عسل ",desc:"طازج",price:""},
+    {name:"بريوش فستق",desc:"طازج",price:""},
+    {name:"بريوش A 380",desc:"طازج",price:""},
+    {name:"بريوش لوتس",desc:"طازج",price:""},
+    {name:"بريوش موزريلا",desc:"طازج",price:""}
+
+  ]
+};
+
+/* أيقونة ثابتة لكل قسم */
+const SECTION_ICON = {
+  hot: "☕",
+  cold: "🧋",
+  juices: "🍹",
+  milkshake: "🥤",
+  sweets: "🍰",
+  sandwich: "🥪",
+  brioche: "🥐"
+};
+
+function createItem(sectionKey, it){
+  const el = document.createElement("div");
+  el.className = "item";
+  const icon = SECTION_ICON[sectionKey] || "⭐";
+
+  el.innerHTML = `
+    <div class="item-initial">
+      ${icon}
+    </div>
+    <div style="flex:1">
+      <div class="name">${it.name}</div>
+      <div class="desc">${it.desc}</div>
+    </div>
+    <div class="price">${it.price}</div>
+  `;
+  return el;
+}
+
+function renderSection(id,list){
+  const box=document.getElementById(id+"-items");
+  if(!box) return;
+  box.innerHTML="";
+  list.forEach(i=> box.appendChild(createItem(id, i)));
+}
+
+// أوّل تحميل
+for(const k in MENU) renderSection(k,MENU[k]);
+
+// تبديل الأقسام (سكرول خفيف)
+document.querySelectorAll(".cat-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".cat-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const targetSection = document.getElementById(btn.dataset.target);
+    if(targetSection){
+      const top = targetSection.getBoundingClientRect().top + window.pageYOffset - 10;
+
+      window.scrollTo({
+        top: top,
+        behavior: "smooth"
+      });
+    }
+  };
+});
+
+// البحث الحي
+document.getElementById("searchInput").addEventListener("input",e=>{
+  const q=e.target.value.toLowerCase();
+  for(const k in MENU){
+    const filtered = MENU[k].filter(i=>
+      (i.name + " " + i.desc).toLowerCase().includes(q)
+    );
+    renderSection(k, filtered);
+  }
+});
+</script>
+
+</body>
+</html>
